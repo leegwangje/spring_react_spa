@@ -3,6 +3,7 @@ package project.abc123.semiprojectv2.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import project.abc123.semiprojectv2.domain.Member;
 import project.abc123.semiprojectv2.domain.MemberDTO;
 import project.abc123.semiprojectv2.repository.MemberRepository;
 
@@ -29,6 +30,17 @@ public class MemberServiceImpl implements MemberService {
                              // true/false 반환
     }
 
+    @Override
+    public Member loginMember(MemberDTO member) {
+      Member findMember = memberMapper.findByUserid(member.getUserid());
+
+      if(findMember == null || findMember.getPasswd() .equals(member.getPasswd())){
+          throw new IllegalStateException("아이디나 비밀번호가 일치하지 않습니다");
+      }
+
+
+        return findMember;
+    }
 
 
 }

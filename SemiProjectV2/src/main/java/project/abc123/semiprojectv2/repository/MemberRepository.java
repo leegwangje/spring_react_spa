@@ -4,6 +4,7 @@ package project.abc123.semiprojectv2.repository;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import project.abc123.semiprojectv2.domain.Member;
 import project.abc123.semiprojectv2.domain.MemberDTO;
 
 @Mapper
@@ -17,4 +18,8 @@ public interface MemberRepository {
 
     @Select("select count(email) from members where email = #{email}")
     int countByEmail(String email);
+
+    @Select("select * from members where userid = #{userid}")
+    Member findByUserid(String userid);
+
 }
