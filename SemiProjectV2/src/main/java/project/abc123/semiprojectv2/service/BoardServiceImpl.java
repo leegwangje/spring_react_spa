@@ -11,8 +11,6 @@ public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
 
-
-
     @Override
     public Board newBoard(Board board) {
         // insert = save(JPA)
