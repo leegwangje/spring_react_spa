@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import project.abc123.semiprojectv2.domain.Board;
 import project.abc123.semiprojectv2.domain.Member;
 import project.abc123.semiprojectv2.domain.MemberDTO;
 import project.abc123.semiprojectv2.domain.User;
@@ -68,5 +69,10 @@ public class AuthController {
 
         return response;
     }
+
+
+
+
+
 
 }
