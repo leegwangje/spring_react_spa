@@ -20,7 +20,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> joinok(@RequestBody MemberDTO member) {
-
+                                   // @RequestBody (문자열로 받기)
         ResponseEntity<?> response = ResponseEntity.internalServerError().build();
 
         log.info("submit된 회원 정보 : {}", member);

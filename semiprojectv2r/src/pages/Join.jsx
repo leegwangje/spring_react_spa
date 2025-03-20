@@ -19,7 +19,7 @@ const processJoinok = async (formValues)=> {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formValues)  // 데이터를 JSON 문자열로 변환
+        body: JSON.stringify(formValues)  //!! 데이터를 JSON 문자열로 변환
     }).then(async response => {
         if (response.ok) { // 회원가입이 정상적으로 처리되었다면
             alert('회원가입이 완료되었습니다!!');
