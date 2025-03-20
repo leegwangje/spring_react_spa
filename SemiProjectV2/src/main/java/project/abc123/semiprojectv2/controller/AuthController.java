@@ -46,15 +46,15 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> loginok(@RequestBody MemberDTO member) {
+    public ResponseEntity<?> loginok(@RequestBody User user) {
         // @RequestBody (문자열로 받기)
         ResponseEntity<?> response = ResponseEntity.internalServerError().build();
 
-        log.info("submit된 로그인 정보 : {}", member);
+        log.info("submit된 로그인 정보 : {}", user);
 
         try {
 
-            Member LoginUser = memberService.loginMember(member);
+            User LoginUser = userService.loginMember(user);
 
             response = ResponseEntity.ok().build();
         } catch (IllegalStateException e) {

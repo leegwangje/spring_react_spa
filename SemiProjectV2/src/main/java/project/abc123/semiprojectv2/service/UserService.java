@@ -6,6 +6,5 @@ public interface UserService {
 
     User newUser(User user);
 
-    User loginUser(User user);
-
+    User loginMember(User user);
 }
