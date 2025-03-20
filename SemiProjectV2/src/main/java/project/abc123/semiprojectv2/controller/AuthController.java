@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.abc123.semiprojectv2.domain.Member;
 import project.abc123.semiprojectv2.domain.MemberDTO;
+import project.abc123.semiprojectv2.domain.User;
 import project.abc123.semiprojectv2.service.MemberService;
+import project.abc123.semiprojectv2.service.UserService;
 
 // 교차출처 리소스 공유 CORS
 @CrossOrigin(origins="http://localhost:5173")
@@ -18,17 +20,18 @@ public class AuthController {
 
 
     private final MemberService memberService;
+    private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> joinok(@RequestBody MemberDTO member) {
+    public ResponseEntity<?> joinok(@RequestBody User user) {
                                    // @RequestBody (문자열로 받기)
         ResponseEntity<?> response = ResponseEntity.internalServerError().build();
 
-        log.info("submit된 회원 정보 : {}", member);
+        log.info("submit된 회원 정보 : {}", user);
 
         try {
 
-            memberService.newMember(member);
+            userService.newUser(user);
             response = ResponseEntity.ok().build();
         } catch (IllegalStateException e) {
 
