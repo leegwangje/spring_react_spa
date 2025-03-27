@@ -2,10 +2,12 @@ package project.abc123.semiprojectv2.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.abc123.semiprojectv2.domain.Board;
+import project.abc123.semiprojectv2.domain.BoardDTO;
 import project.abc123.semiprojectv2.domain.BoardListDTO;
 import project.abc123.semiprojectv2.service.BoardService;
 
@@ -45,4 +47,20 @@ public class BoardController {
 
         return new ResponseEntity<>(boardListDTO, HttpStatus.OK);
     }
+
+    @GetMapping("/find/{cpg}/{findtype}/{findkey}")
+    public ResponseEntity<?> find(@PathVariable int cpg, @PathVariable String findtype, @PathVariable String findkey) {
+        BoardListDTO boardListDTO = boardService.findBoard(cpg,findtype,findkey);
+
+        return new ResponseEntity<>(boardListDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/test/{cpg}")
+    public ResponseEntity<?> test(@PathVariable int cpg) {
+       Page<BoardDTO> pageboards = boardService.testreadBoard(cpg);
+
+        return new ResponseEntity<>(pageboards, HttpStatus.OK);
+    }
+
+
 }
