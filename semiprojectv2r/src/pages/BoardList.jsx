@@ -1,11 +1,25 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "../styles/board.css"
 
 // BoardList 함수 컴포넌트 정의
 const BoardList = () => {
+    const [boardData, setBoardData] = useState({});
+
+    // react에서 부수작업side effect을 수행하기 위한 hook
+    // 부수작업 : 데이터 가져오기, DOM 조작, 로그
+    useEffect(() => {
+        fetch(`http://localhost:8080/api/board/list`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                setBoardData(data);
+            })
+            .catch(err => console.log('오류발생!! ', err));
+    }, []);
+
     const goBoardWrite = () => {
         location.href = '/board/write';
-    }
+    };
 
     return (
         <main id="content">
@@ -26,7 +40,7 @@ const BoardList = () => {
                         <div className="d-flex align-items-center gap-3">
                             <select className="form-select" style={{width: "120px"}}
                                     id="findtype" name="findtype" defaultValue="title">
-                                <option value="title" >제목</option>
+                                <option value="title">제목</option>
                                 <option value="userid">작성자</option>
                                 <option value="contents">내용</option>
                             </select>
@@ -55,246 +69,22 @@ const BoardList = () => {
                 </thead>
 
                 <tbody>
-                <tr>
-                    <td>3939</td>
-                    <td><a href="/board/view?bno=3939">fdsfasd</a> </td>
-                    <td>abc123</td>
-                    <td>2025-03-05</td>
-                    <td>0</td>
-                    <td>27</td>
-                </tr>
-                <tr>
-                    <td>3938</td>
-                    <td><a href="/board/view?bno=3938">AMD, 차세대 RDNA 4 기반 라데온 RX 9000 공개…‘AI 게이밍 진화’</a> </td>
-                    <td>냐옹냐옹</td>
-                    <td>2025-03-04</td>
-                    <td>0</td>
-                    <td>53</td>
-                </tr>
-                <tr>
-                    <td>3937</td>
-                    <td><a href="/board/view?bno=3937">&quot;아빠, 곧 나오는데 참고하라고&quot;… 닌텐도 스위치2 출시 윤곽</a> </td>
-                    <td>987xyz</td>
-                    <td>2025-03-04</td>
-                    <td>0</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>3939</td>
-                    <td><a href="/board/view?bno=3939">fdsfasd</a> </td>
-                    <td>abc123</td>
-                    <td>2025-03-05</td>
-                    <td>0</td>
-                    <td>27</td>
-                </tr>
-                <tr>
-                    <td>3938</td>
-                    <td><a href="/board/view?bno=3938">AMD, 차세대 RDNA 4 기반 라데온 RX 9000 공개…‘AI 게이밍 진화’</a> </td>
-                    <td>냐옹냐옹</td>
-                    <td>2025-03-04</td>
-                    <td>0</td>
-                    <td>53</td>
-                </tr>
-                <tr>
-                    <td>3937</td>
-                    <td><a href="/board/view?bno=3937">&quot;아빠, 곧 나오는데 참고하라고&quot;… 닌텐도 스위치2 출시 윤곽</a> </td>
-                    <td>987xyz</td>
-                    <td>2025-03-04</td>
-                    <td>0</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>3939</td>
-                    <td><a href="/board/view?bno=3939">fdsfasd</a> </td>
-                    <td>abc123</td>
-                    <td>2025-03-05</td>
-                    <td>0</td>
-                    <td>27</td>
-                </tr>
-                <tr>
-                    <td>3938</td>
-                    <td><a href="/board/view?bno=3938">AMD, 차세대 RDNA 4 기반 라데온 RX 9000 공개…‘AI 게이밍 진화’</a> </td>
-                    <td>냐옹냐옹</td>
-                    <td>2025-03-04</td>
-                    <td>0</td>
-                    <td>53</td>
-                </tr>
-                <tr>
-                    <td>3937</td>
-                    <td><a href="/board/view?bno=3937">&quot;아빠, 곧 나오는데 참고하라고&quot;… 닌텐도 스위치2 출시 윤곽</a> </td>
-                    <td>987xyz</td>
-                    <td>2025-03-04</td>
-                    <td>0</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>3939</td>
-                    <td><a href="/board/view?bno=3939">fdsfasd</a> </td>
-                    <td>abc123</td>
-                    <td>2025-03-05</td>
-                    <td>0</td>
-                    <td>27</td>
-                </tr>
-                <tr>
-                    <td>3938</td>
-                    <td><a href="/board/view?bno=3938">AMD, 차세대 RDNA 4 기반 라데온 RX 9000 공개…‘AI 게이밍 진화’</a> </td>
-                    <td>냐옹냐옹</td>
-                    <td>2025-03-04</td>
-                    <td>0</td>
-                    <td>53</td>
-                </tr>
-                <tr>
-                    <td>3937</td>
-                    <td><a href="/board/view?bno=3937">&quot;아빠, 곧 나오는데 참고하라고&quot;… 닌텐도 스위치2 출시 윤곽</a> </td>
-                    <td>987xyz</td>
-                    <td>2025-03-04</td>
-                    <td>0</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>3939</td>
-                    <td><a href="/board/view?bno=3939">fdsfasd</a> </td>
-                    <td>abc123</td>
-                    <td>2025-03-05</td>
-                    <td>0</td>
-                    <td>27</td>
-                </tr>
-                <tr>
-                    <td>3938</td>
-                    <td><a href="/board/view?bno=3938">AMD, 차세대 RDNA 4 기반 라데온 RX 9000 공개…‘AI 게이밍 진화’</a> </td>
-                    <td>냐옹냐옹</td>
-                    <td>2025-03-04</td>
-                    <td>0</td>
-                    <td>53</td>
-                </tr>
-                <tr>
-                    <td>3937</td>
-                    <td><a href="/board/view?bno=3937">&quot;아빠, 곧 나오는데 참고하라고&quot;… 닌텐도 스위치2 출시 윤곽</a> </td>
-                    <td>987xyz</td>
-                    <td>2025-03-04</td>
-                    <td>0</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>3939</td>
-                    <td><a href="/board/view?bno=3939">fdsfasd</a> </td>
-                    <td>abc123</td>
-                    <td>2025-03-05</td>
-                    <td>0</td>
-                    <td>27</td>
-                </tr>
-                <tr>
-                    <td>3938</td>
-                    <td><a href="/board/view?bno=3938">AMD, 차세대 RDNA 4 기반 라데온 RX 9000 공개…‘AI 게이밍 진화’</a> </td>
-                    <td>냐옹냐옹</td>
-                    <td>2025-03-04</td>
-                    <td>0</td>
-                    <td>53</td>
-                </tr>
-                <tr>
-                    <td>3937</td>
-                    <td><a href="/board/view?bno=3937">&quot;아빠, 곧 나오는데 참고하라고&quot;… 닌텐도 스위치2 출시 윤곽</a> </td>
-                    <td>987xyz</td>
-                    <td>2025-03-04</td>
-                    <td>0</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>3939</td>
-                    <td><a href="/board/view?bno=3939">fdsfasd</a> </td>
-                    <td>abc123</td>
-                    <td>2025-03-05</td>
-                    <td>0</td>
-                    <td>27</td>
-                </tr>
-                <tr>
-                    <td>3938</td>
-                    <td><a href="/board/view?bno=3938">AMD, 차세대 RDNA 4 기반 라데온 RX 9000 공개…‘AI 게이밍 진화’</a> </td>
-                    <td>냐옹냐옹</td>
-                    <td>2025-03-04</td>
-                    <td>0</td>
-                    <td>53</td>
-                </tr>
-                <tr>
-                    <td>3937</td>
-                    <td><a href="/board/view?bno=3937">&quot;아빠, 곧 나오는데 참고하라고&quot;… 닌텐도 스위치2 출시 윤곽</a> </td>
-                    <td>987xyz</td>
-                    <td>2025-03-04</td>
-                    <td>0</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>3939</td>
-                    <td><a href="/board/view?bno=3939">fdsfasd</a> </td>
-                    <td>abc123</td>
-                    <td>2025-03-05</td>
-                    <td>0</td>
-                    <td>27</td>
-                </tr>
-                <tr>
-                    <td>3938</td>
-                    <td><a href="/board/view?bno=3938">AMD, 차세대 RDNA 4 기반 라데온 RX 9000 공개…‘AI 게이밍 진화’</a> </td>
-                    <td>냐옹냐옹</td>
-                    <td>2025-03-04</td>
-                    <td>0</td>
-                    <td>53</td>
-                </tr>
-                <tr>
-                    <td>3937</td>
-                    <td><a href="/board/view?bno=3937">&quot;아빠, 곧 나오는데 참고하라고&quot;… 닌텐도 스위치2 출시 윤곽</a> </td>
-                    <td>987xyz</td>
-                    <td>2025-03-04</td>
-                    <td>0</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>3939</td>
-                    <td><a href="/board/view?bno=3939">fdsfasd</a> </td>
-                    <td>abc123</td>
-                    <td>2025-03-05</td>
-                    <td>0</td>
-                    <td>27</td>
-                </tr>
-                <tr>
-                    <td>3938</td>
-                    <td><a href="/board/view?bno=3938">AMD, 차세대 RDNA 4 기반 라데온 RX 9000 공개…‘AI 게이밍 진화’</a> </td>
-                    <td>냐옹냐옹</td>
-                    <td>2025-03-04</td>
-                    <td>0</td>
-                    <td>53</td>
-                </tr>
-                <tr>
-                    <td>3937</td>
-                    <td><a href="/board/view?bno=3937">&quot;아빠, 곧 나오는데 참고하라고&quot;… 닌텐도 스위치2 출시 윤곽</a> </td>
-                    <td>987xyz</td>
-                    <td>2025-03-04</td>
-                    <td>0</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>3939</td>
-                    <td><a href="/board/view?bno=3939">fdsfasd</a> </td>
-                    <td>abc123</td>
-                    <td>2025-03-05</td>
-                    <td>0</td>
-                    <td>27</td>
-                </tr>
-                <tr>
-                    <td>3938</td>
-                    <td><a href="/board/view?bno=3938">AMD, 차세대 RDNA 4 기반 라데온 RX 9000 공개…‘AI 게이밍 진화’</a> </td>
-                    <td>냐옹냐옹</td>
-                    <td>2025-03-04</td>
-                    <td>0</td>
-                    <td>53</td>
-                </tr>
-                <tr>
-                    <td>3937</td>
-                    <td><a href="/board/view?bno=3937">&quot;아빠, 곧 나오는데 참고하라고&quot;… 닌텐도 스위치2 출시 윤곽</a> </td>
-                    <td>987xyz</td>
-                    <td>2025-03-04</td>
-                    <td>0</td>
-                    <td>1</td>
-                </tr>
+                {
+                    (!Array.isArray(boardData.bdlist) || boardData.bdlist.length === 0) ?
+                        <tr><td colSpan="6">게시글이 없어요!!</td></tr>
+                        :
+                        (boardData.bdlist.map(bd => (
+                                <tr key={bd.bno}>
+                                    <td>{bd.bno}</td>
+                                    <td><a href="/board/view?bno=${bd.bno}">{bd.title}</a></td>
+                                    <td>{bd.userid}</td>
+                                    <td>{bd.regdate.substring(0,10)}</td>
+                                    <td>{bd.thumbs}</td>
+                                    <td>{bd.views}</td>
+                                </tr>
+                            ))
+                        )
+                }
                 </tbody>
 
                 <tfoot>
