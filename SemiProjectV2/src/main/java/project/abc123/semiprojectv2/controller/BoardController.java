@@ -18,19 +18,20 @@ import project.abc123.semiprojectv2.service.BoardService;
 @RequiredArgsConstructor
 public class BoardController {
 
-   private final BoardService boardService;
+    private final BoardService boardService;
 
     @PostMapping("/write")
     public ResponseEntity<?> writeok(@RequestBody Board board) {
         ResponseEntity<?> response = ResponseEntity.internalServerError().build();
 
-        log.info("list된 게시물 정보 : {}", board);
+        log.info("submit된 게시판 데이터 : {}", board);
 
         try {
-
-            boardService.newBoard(board) ;
-                response = ResponseEntity.ok().build();
-
+            //if (!googleRecaptchaService.verifyRecaptcha(gRecaptchaResponse)) {
+            //    throw new IllegalStateException("자동가입방지 코드 오류!!");
+            //}
+            boardService.newBoard(board);
+            response = ResponseEntity.ok().build();
         } catch (IllegalStateException ex) {
             response = ResponseEntity.badRequest().body(ex.getMessage());
         }
@@ -39,8 +40,8 @@ public class BoardController {
     }
 
     // list 엔드포인트 변경
-    //http://localhost:8080/api/board/list/?cpg=4
-    // http://localhost:8080/api/board/list/3
+    // http://localhost:8080/api/board/list?cpg=4
+    // http://localhost:8080/api/board/list/4
     @GetMapping("/list/{cpg}")
     public ResponseEntity<?> list(@PathVariable int cpg) {
         BoardListDTO boardListDTO = boardService.readBoard(cpg);
@@ -48,19 +49,19 @@ public class BoardController {
         return new ResponseEntity<>(boardListDTO, HttpStatus.OK);
     }
 
-    @GetMapping("/find/{cpg}/{findtype}/{findkey}")
-    public ResponseEntity<?> find(@PathVariable int cpg, @PathVariable String findtype, @PathVariable String findkey) {
-        BoardListDTO boardListDTO = boardService.findBoard(cpg,findtype,findkey);
+    @GetMapping("/find/{findtype}/{findkey}/{cpg}")
+    public ResponseEntity<?> find(@PathVariable int cpg,
+                                  @PathVariable String findtype, @PathVariable String findkey) {
+        BoardListDTO boardListDTO = boardService.findBoard(cpg, findtype, findkey);
 
         return new ResponseEntity<>(boardListDTO, HttpStatus.OK);
     }
 
     @GetMapping("/test/{cpg}")
     public ResponseEntity<?> test(@PathVariable int cpg) {
-       Page<BoardDTO> pageboards = boardService.testreadBoard(cpg);
+        Page<BoardDTO> pageboards = boardService.testreadBoard(cpg);
 
         return new ResponseEntity<>(pageboards, HttpStatus.OK);
     }
-
 
 }

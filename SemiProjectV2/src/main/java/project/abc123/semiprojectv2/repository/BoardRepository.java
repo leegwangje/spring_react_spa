@@ -15,19 +15,17 @@ import java.util.List;
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
 
-//    @Query(value =  "select  bno, title, userid, regdate, thumbs, views from  boards order by bno desc limit :stnum,:pageSize",
-//    nativeQuery = true)
-//    List<BoardDTO>findBoards(int stnum, int pageSize);
+
+      //@Query(value = "select bno, title, userid, regdate, thumbs, views from boards order by bno desc limit :stnum, :pageSize",
+      //       nativeQuery = true)
+      //List<BoardDTO> findBoards(int stnum, int pageSize);
 
       Page<BoardDTO> findBy(Pageable pageable);
 
       Page<BoardDTO> findByTitleContains(Pageable pageable, String findkey);
-
-      Page<BoardDTO> findByUserid(Pageable pageable, String findkey);
-
+      Page<BoardDTO> findByUseridContains(Pageable pageable, String findkey);
       Page<BoardDTO> findByContentsContains(Pageable pageable, String findkey);
 
       Page<BoardDTO> findByTitleContainsOrContentsContains(Pageable pageable, String fkey1, String fkey2);
-
 
 }

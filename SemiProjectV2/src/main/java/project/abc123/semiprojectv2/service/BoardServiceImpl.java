@@ -1,6 +1,7 @@
 package project.abc123.semiprojectv2.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +15,7 @@ import project.abc123.semiprojectv2.repository.BoardRepository;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
@@ -23,53 +25,53 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public Board newBoard(Board board) {
-        // insert = save(JPA)
+
         return boardRepository.save(board);
     }
 
     @Override
     public BoardListDTO readBoard(int cpg) {
-        Pageable pageable = PageRequest.of(cpg, pageSize, Sort.Direction.DESC, "bno");
+        Pageable pageable = PageRequest.of(cpg-1, pageSize, Sort.Direction.DESC, "bno");
 
-        Page<BoardDTO> pageboards= boardRepository.findBy(pageable);
+        Page<BoardDTO> pageboards = boardRepository.findBy(pageable);
         List<BoardDTO> boards = pageboards.getContent();
-        int totalItems =(int)pageboards.getTotalElements();
+        int totalItems = (int) pageboards.getTotalElements();
         int cntpg = pageboards.getTotalPages();
 
-        return new BoardListDTO(cpg,totalItems,pageSize,boards);
+        return new BoardListDTO(cpg, totalItems, pageSize, boards);
     }
 
     @Override
     public BoardListDTO findBoard(int cpg, String findtype, String findkey) {
-        Pageable pageable = PageRequest.of(cpg, pageSize, Sort.Direction.DESC, "bno");
+        Pageable pageable = PageRequest.of(cpg-1, pageSize, Sort.Direction.DESC, "bno");
         Page<BoardDTO> pageboards = null;
 
         switch (findtype) {
             case "title":
-                pageboards =boardRepository.findByTitleContains(pageable, findkey); break;
+                pageboards = boardRepository.findByTitleContains(pageable, findkey); break;
             case "contents":
-                 pageboards =boardRepository.findByContentsContains(pageable, findkey); break;
+                pageboards = boardRepository.findByContentsContains(pageable, findkey); break;
             case "userid":
-                pageboards= boardRepository.findByUserid(pageable, findkey); break;
+                pageboards = boardRepository.findByUseridContains(pageable, findkey); break;
             case "titconts":
-                pageboards=boardRepository.findByTitleContainsOrContentsContains(pageable, findkey, findkey); break;
-                
+                pageboards = boardRepository.findByTitleContainsOrContentsContains(pageable, findkey, findkey); break;
         }
-        List<BoardDTO> boards = pageboards.getContent();
-        int totalItems =(int)pageboards.getTotalElements();
 
-        return new BoardListDTO(cpg,totalItems,pageSize,boards);
+        List<BoardDTO> boards = pageboards.getContent();
+        int totalItems = (int) pageboards.getTotalElements();
+
+        return new BoardListDTO(cpg, totalItems, pageSize, boards);
     }
+
+
 
     @Override
     public Page<BoardDTO> testreadBoard(int cpg) {
+        Pageable pageable = PageRequest.of(cpg-1, pageSize, Sort.Direction.DESC, "bno");
 
-        Pageable pageable = PageRequest.of(cpg, pageSize, Sort.Direction.DESC, "bno");
-
-        Page<BoardDTO> pageboards= boardRepository.findBy(pageable);
+        Page<BoardDTO> pageboards = boardRepository.findBy(pageable);
 
         return pageboards;
     }
-
 
 }
