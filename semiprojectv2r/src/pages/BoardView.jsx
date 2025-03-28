@@ -45,8 +45,17 @@ const BoardView = () => {
                         </td>
                     </tr>
                     </thead>
-                    <tbody id="boardView">
-
+                    <tbody>
+                    {
+                        (!boardData.bd) ?
+                        <tr><td colSpan="3">본문글이 없어요!!</td></tr>
+                        :
+                        <>
+                        <tr><th className="vtit" colspan="2" >{boardData.bd.title}</th></tr>
+                        <tr><td className="vinfo"> {boardData.bd.userid}</td>
+                        <td className="text-end vinfo" >{boardData.bd.regdate}/{boardData.bd.thumbs}/{boardData.bd.views}</td></tr>
+                        <tr><td className="vcont pre" colspan="2" >{boardData.bd.contents}</td></tr> </>
+                    }
                     </tbody>
                     <tfoot>
                     <tr>
