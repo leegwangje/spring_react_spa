@@ -8,11 +8,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import project.abc123.semiprojectv2.domain.Board;
-import project.abc123.semiprojectv2.domain.BoardDTO;
-import project.abc123.semiprojectv2.domain.BoardListDTO;
-import project.abc123.semiprojectv2.domain.BoardReplyDTO;
+import project.abc123.semiprojectv2.domain.*;
 import project.abc123.semiprojectv2.repository.BoardRepository;
+import project.abc123.semiprojectv2.repository.ReplyRepository;
 
 import java.util.List;
 
@@ -22,6 +20,8 @@ import java.util.List;
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
+    private final ReplyRepository replyRepository;
+
     @Value("${board.pagesize}") private int pageSize;
 
     @Override
@@ -77,7 +77,9 @@ public class BoardServiceImpl implements BoardService {
     public BoardReplyDTO readOneBoardReply(Long bno) {
         Board board = boardRepository.findByBno(bno);
 
-        return new BoardReplyDTO(board,null);
+        List<Reply>replies = replyRepository.findByPnoOrderByRef(bno);
+
+        return new BoardReplyDTO(board,replies);
     }
 
 }
