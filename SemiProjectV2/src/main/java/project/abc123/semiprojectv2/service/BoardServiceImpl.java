@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import project.abc123.semiprojectv2.domain.*;
 import project.abc123.semiprojectv2.repository.BoardRepository;
 import project.abc123.semiprojectv2.repository.ReplyRepository;
@@ -73,10 +74,11 @@ public class BoardServiceImpl implements BoardService {
         return pageboards;
     }
 
+    @Transactional
     @Override
     public BoardReplyDTO readOneBoardReply(Long bno) {
+        boardRepository.updateViews(bno);
         Board board = boardRepository.findByBno(bno);
-
         List<Reply>replies = replyRepository.findByPnoOrderByRef(bno);
 
         return new BoardReplyDTO(board,replies);
