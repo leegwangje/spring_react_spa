@@ -60,7 +60,8 @@ public class BoardController {
 
     @GetMapping("/view/{bno}")
     public ResponseEntity<?> view(@PathVariable Long bno) {
-        BoardReplyDTO boardreply = boardService.readOneBoardReply(bno);
+        //BoardReplyDTO boardreply = boardService.readOneBoardReply(bno);
+        BoardReplyDTO boardreply = boardService.readOneBoardWithReply(bno);
 
         return new ResponseEntity<>(boardreply, HttpStatus.OK);
     }

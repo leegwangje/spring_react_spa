@@ -4,6 +4,7 @@ package project.abc123.semiprojectv2.repository;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -36,4 +37,9 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
       @Query("update Board set views = views +1 where bno = :bno")
       int updateViews(@Param("bno") Long bno);
 
+      @Query("select b from Board b left join fetch b.replies where b.bno = :bno")
+      Board findByBnoWithReplies(Long bno);
+
+      //@EntityGraph(attributePaths = {"reply"})
+     // Board findByBno(Long bno);
 }

@@ -7,6 +7,7 @@ const rootElement = document.getElementById('root');
 
 if (rootElement) {
     createRoot(rootElement).render(
+        // 무결성 체크 때문에 insert시 2씩 증가
         <StrictMode>
             <App />
         </StrictMode>
