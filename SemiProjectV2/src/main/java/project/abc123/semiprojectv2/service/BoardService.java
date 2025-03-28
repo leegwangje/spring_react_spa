@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import project.abc123.semiprojectv2.domain.Board;
 import project.abc123.semiprojectv2.domain.BoardDTO;
 import project.abc123.semiprojectv2.domain.BoardListDTO;
+import project.abc123.semiprojectv2.domain.BoardReplyDTO;
 
 public interface BoardService {
 
@@ -14,4 +15,6 @@ public interface BoardService {
     BoardListDTO findBoard(int cpg,String findtype, String findkey);
 
     Page<BoardDTO> testreadBoard(int cpg);
+
+    BoardReplyDTO readOneBoardReply(Long bno);
 }

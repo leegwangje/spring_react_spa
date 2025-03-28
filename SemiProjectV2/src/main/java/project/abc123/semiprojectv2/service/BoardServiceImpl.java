@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import project.abc123.semiprojectv2.domain.Board;
 import project.abc123.semiprojectv2.domain.BoardDTO;
 import project.abc123.semiprojectv2.domain.BoardListDTO;
+import project.abc123.semiprojectv2.domain.BoardReplyDTO;
 import project.abc123.semiprojectv2.repository.BoardRepository;
 
 import java.util.List;
@@ -63,8 +64,6 @@ public class BoardServiceImpl implements BoardService {
         return new BoardListDTO(cpg, totalItems, pageSize, boards);
     }
 
-
-
     @Override
     public Page<BoardDTO> testreadBoard(int cpg) {
         Pageable pageable = PageRequest.of(cpg-1, pageSize, Sort.Direction.DESC, "bno");
@@ -72,6 +71,13 @@ public class BoardServiceImpl implements BoardService {
         Page<BoardDTO> pageboards = boardRepository.findBy(pageable);
 
         return pageboards;
+    }
+
+    @Override
+    public BoardReplyDTO readOneBoardReply(Long bno) {
+        Board board = boardRepository.findByBno(bno);
+
+        return new BoardReplyDTO(board,null);
     }
 
 }

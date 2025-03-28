@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import project.abc123.semiprojectv2.domain.Board;
 import project.abc123.semiprojectv2.domain.BoardDTO;
 import project.abc123.semiprojectv2.domain.BoardListDTO;
+import project.abc123.semiprojectv2.domain.BoardReplyDTO;
 import project.abc123.semiprojectv2.service.BoardService;
 
 @CrossOrigin(origins="http://localhost:5173")
@@ -55,6 +56,13 @@ public class BoardController {
         BoardListDTO boardListDTO = boardService.findBoard(cpg, findtype, findkey);
 
         return new ResponseEntity<>(boardListDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/view/{bno}")
+    public ResponseEntity<?> view(@PathVariable Long bno) {
+        BoardReplyDTO boardreply = boardService.readOneBoardReply(bno);
+
+        return new ResponseEntity<>(boardreply, HttpStatus.OK);
     }
 
     @GetMapping("/test/{cpg}")
