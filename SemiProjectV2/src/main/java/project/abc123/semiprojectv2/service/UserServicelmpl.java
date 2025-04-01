@@ -1,6 +1,7 @@
 package project.abc123.semiprojectv2.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import project.abc123.semiprojectv2.domain.Member;
 import project.abc123.semiprojectv2.domain.User;
@@ -31,12 +32,13 @@ public class UserServicelmpl implements UserService {
 
     @Override
     public User loginMember(User user) {
-        User findUser = userRepository.findByUserid(user.getUserid());
+        User findUser = userRepository.findByUserid(user.getUserid()).orElseThrow(
+                () -> new UsernameNotFoundException("사용자가 존재하지 않습니다!!")
+        );
 
         if (findUser == null || findUser.getPasswd().equals(user.getPasswd())) {
             throw new IllegalStateException("아이디나 비밀번호가 일치하지 않습니다");
         }
-
 
         return findUser;
     }
