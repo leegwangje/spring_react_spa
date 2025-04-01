@@ -31,13 +31,13 @@ public class UserServicelmpl implements UserService {
 
 
     @Override
-    public User loginMember(User user) {
+    public User loginUser(User user) {
         User findUser = userRepository.findByUserid(user.getUserid()).orElseThrow(
                 () -> new UsernameNotFoundException("사용자가 존재하지 않습니다!!")
         );
 
-        if (findUser == null || findUser.getPasswd().equals(user.getPasswd())) {
-            throw new IllegalStateException("아이디나 비밀번호가 일치하지 않습니다");
+        if (findUser == null || !findUser.getPasswd().equals(user.getPasswd())) {
+            throw new IllegalStateException("아이디나 비밀번호가 일치하지 않습니다!!");
         }
 
         return findUser;

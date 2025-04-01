@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.security.Key;
 import java.util.Date;
-
 @Component
 public class JwtTokenProvider {
 
@@ -18,26 +17,26 @@ public class JwtTokenProvider {
     private String secretString;
 
     @Value("${jwt.validity}")
-    private Long validity;
+    private long validity;
 
     private Key secretKey;
 
-    // 의존성 주입후 초기화
     // jwt 생성시 특수문자가 포함된 비밀키를 사용하게 해 줌
-    @PostConstruct
+    @PostConstruct // 의존성 주입후 초기화
     protected void init() {
-        byte[] keyBytes =secretString.getBytes();
+        // secretString의 내용을 byte 배열로 변환후
+        byte[] keyBytes = secretString.getBytes();
+        // JJWT의 안전한 key 생성 방식으로 key 생성
         secretKey = Keys.hmacShaKeyFor(keyBytes);
     }
 
     // 주어진 username을 기반으로 새로운 jwt 생성
-    // 클레임 : 토큰에 사용할 정보 조각을 의미, 보통 키- 값 형태로 저장
-    // setSsubject: 클레임에 사용자정보 저장 (sub)
-    // setIssuedAT : 클레임에 토큰 발급시간 저장
-    // setExpiration : 클레임에 토큰 만료시간 저장
+    // 클레임 : 토큰에 사용할 정보 조각을 의미, 보통 키-값형태로 저장
+    // setSubject : 클레임에 사용자정보 저장 (sub)
+    // setIssuedAt : 클레임에 토큰 발급시간 저장 (iat)
+    // setExpiration : 클레임에 토큰 만료시간 저장 (exp)
     // signWith : 서명과 암호화 방법 지정
-    // compact : 서명과 클레임에 조합해서 토큰 생성
-
+    // compact : 서명과 클레임을 조합해서 토큰 생성
     public String generateToken(String username) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + validity);
@@ -47,7 +46,7 @@ public class JwtTokenProvider {
     }
 
     // 주어진 JWT가 유효한지, 토큰의 소유자가 맞는지 확인
-    public boolean validateToken(String token,String username) {
+    public boolean validateToken(String token, String username) {
         final String tokenUsername = extractUsername(token);
         return (tokenUsername.equals(username) && !isTokenExpired(token));
     }
@@ -70,4 +69,5 @@ public class JwtTokenProvider {
         return Jwts.parserBuilder().setSigningKey(secretKey)
                 .build().parseClaimsJws(token).getBody();
     }
+
 }
