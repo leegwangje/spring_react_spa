@@ -7,6 +7,7 @@ const NotFound = () => {
             <h3 className="text-danger">페이지가 존재하지 않습니다!!</h3>
         </main>
     );
+
 };
 
 export default NotFound;
