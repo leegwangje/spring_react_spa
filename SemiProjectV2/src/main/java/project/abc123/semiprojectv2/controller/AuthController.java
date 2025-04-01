@@ -2,8 +2,10 @@ package project.abc123.semiprojectv2.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import project.abc123.semiprojectv2.domain.Board;
@@ -13,6 +15,9 @@ import project.abc123.semiprojectv2.domain.User;
 import project.abc123.semiprojectv2.jwt.JwtTokenProvider;
 import project.abc123.semiprojectv2.service.MemberService;
 import project.abc123.semiprojectv2.service.UserService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 // 교차출처 리소스 공유 CORS
 @CrossOrigin(origins="http://localhost:5173")
@@ -66,22 +71,22 @@ public class AuthController {
             // 인증이 완료되면 jwt 토큰 생성
             final String jwt = jwtTokenProvider.generateToken(user.getUserid());
 
-            response = ResponseEntity.ok().build();
-        } catch (IllegalStateException e) {
+            // 생성한 토큰을 JSON 형식으로 만듦
+            Map<String, Object> tokens = Map.of(
+              "accessToken", jwt
+            );
 
-            response = ResponseEntity.badRequest().body(e.getMessage());
-            e.printStackTrace();
+            response = ResponseEntity.ok().body(tokens);
+        } catch (BadCredentialsException e) {
+
+            response = ResponseEntity.badRequest().body("아이디나 비밀번호가 일치하지 않습니다!");
+            log.info(e.getMessage());
         } catch (Exception e) {
-
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
 
         return response;
     }
-
-
-
-
 
 
 }
