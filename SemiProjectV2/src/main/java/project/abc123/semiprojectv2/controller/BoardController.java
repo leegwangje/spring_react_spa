@@ -12,7 +12,7 @@ import project.abc123.semiprojectv2.domain.BoardListDTO;
 import project.abc123.semiprojectv2.domain.BoardReplyDTO;
 import project.abc123.semiprojectv2.service.BoardService;
 
-@CrossOrigin(origins="http://localhost:5173")
+@CrossOrigin(origins = {"http://localhost:5173", "http://172.30.1.58:3000"})
 @Slf4j
 @RestController
 @RequestMapping("/api/board")
