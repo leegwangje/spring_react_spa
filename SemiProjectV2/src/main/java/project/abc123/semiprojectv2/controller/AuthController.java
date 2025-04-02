@@ -20,7 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 // 교차출처 리소스 공유 CORS
-@CrossOrigin(origins="http://localhost:5173")
+@CrossOrigin(origins = {"http://localhost:5173", "http://172.30.1.58:3000"})
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
