@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "./layout/Header";
 import Nav from "./layout/Nav";
 import Footer from "./layout/Footer";
+import {AuthProvider} from "@/contexts/AuthContext";
 
 export default function RootLayout({ children }) {
   return (
@@ -22,8 +23,10 @@ export default function RootLayout({ children }) {
 
         <div className="content-wrapper mx-auto">
             <Header />
+            <AuthProvider >
             <Nav />
           {children}
+            </AuthProvider>
             <Footer />
         </div>
       </div>
