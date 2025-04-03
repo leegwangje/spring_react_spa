@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/semiprojectv2.main.iml" filepath="$PROJECT_DIR$/.idea/modules/semiprojectv2.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/semiprojectv2.test.iml" filepath="$PROJECT_DIR$/.idea/modules/semiprojectv2.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/semiprojectv2n/semiprojectv2n.iml" filepath="$PROJECT_DIR$/semiprojectv2n/semiprojectv2n.iml" />
       <module fileurl="file://$PROJECT_DIR$/semiprojectv2r/semiprojectv2r.iml" filepath="$PROJECT_DIR$/semiprojectv2r/semiprojectv2r.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring_react_spa.iml" filepath="$PROJECT_DIR$/spring_react_spa.iml" />
     </modules>
