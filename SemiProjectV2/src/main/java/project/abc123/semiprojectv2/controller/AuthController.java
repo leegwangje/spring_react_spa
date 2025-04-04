@@ -13,6 +13,7 @@ import project.abc123.semiprojectv2.domain.Member;
 import project.abc123.semiprojectv2.domain.MemberDTO;
 import project.abc123.semiprojectv2.domain.User;
 import project.abc123.semiprojectv2.jwt.JwtTokenProvider;
+import project.abc123.semiprojectv2.service.GoogleRecaptchaService;
 import project.abc123.semiprojectv2.service.MemberService;
 import project.abc123.semiprojectv2.service.UserService;
 
@@ -29,9 +30,9 @@ import java.util.Map;
 public class AuthController {
 
     private final UserService userService;
-    private final MemberService memberService;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
+    private final GoogleRecaptchaService googleRecaptchaService;
 
     @PostMapping("/signup")
     public ResponseEntity<?> joinok(@RequestBody User user) {
@@ -64,6 +65,9 @@ public class AuthController {
         log.info("submit된 로그인 정보 : {}", user);
 
         try {
+            if (!googleRecaptchaService.verifyRecaptcha(user.getGRecaptchaResponse())) {
+                throw new IllegalStateException("자동가입방지 코드 오류!!");
+            }
 
             // 스프링 시큐리티에서 제공하는 인증처리 메니저로 인증 처리
             authenticationManager.authenticate(
