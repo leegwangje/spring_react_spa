@@ -17,6 +17,13 @@ const validateGalleryForm = (values) => {
     if (!values.contents) {
         formErrors.contents = '본문글을 입력하세요';
     }
+
+    // 파일요소 검사 (첨부파일크기)
+        console.log(">> gallery write",values.ginames.size);
+    if(values.ginames.size ===0) {
+        formErrors.contents='이미지 파일을 첨부하세요';
+    }
+
     // 리캡챠 확인 검사
     if(!values["g-recaptcha-response"]){
         formErrors.recaptcha="자동가입방지를 확인하세요!!";
