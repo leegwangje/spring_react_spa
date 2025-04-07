@@ -80,9 +80,15 @@ public boolean newPds(Pds pds, List<MultipartFile> panames) {
 
     return result;
 }
-
+    @Transactional
     @Override
     public PdsReplyDTO readOnePdsReply(int pno) {
-        return null;
+
+    Pds pds= pdsMapper.findByPno(pno);
+    List <PdsAttach> pas= pdsAttachMapper.findByPno(pno);
+    List<PdsReply> prs= pdsReplyMapper.findByPno(pno);
+    //pdsMapper.updateView(pno);
+
+        return new PdsReplyDTO(pds, pas, prs);
     }
 }

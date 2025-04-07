@@ -5,6 +5,7 @@ import project.abc123.semiprojectv2.domain.Pds;
 
 public interface PdsRepository extends JpaRepository<Pds, Long> {
 
+    Pds findByPno(int pno);
 
     
 }
