@@ -3,8 +3,9 @@ package project.abc123.semiprojectv2.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import project.abc123.semiprojectv2.domain.PdsReplyDTO;
 import project.abc123.semiprojectv2.service.PdsService;
 import project.abc123.semiprojectv2.utils.GoogleRecaptchaService;
 
+import java.io.File;
 import java.util.List;
 
 @Slf4j
@@ -27,6 +29,8 @@ public class PdsController {
 
     private final PdsService pdsService;
     private final GoogleRecaptchaService googleRecaptchaService;
+    @Value("${savePdsDir}")
+    private String savePdsDir;
 
 //    @GetMapping("/list")
 //    public String list(Model m) {
@@ -50,19 +54,19 @@ public class PdsController {
 
     // /gallery/view/글번호
     @GetMapping("/view/{pno}")
-    public  ResponseEntity<?> view( @PathVariable int pno) {
+    public ResponseEntity<?> view(@PathVariable int pno) {
 
         PdsReplyDTO rdsreply = pdsService.readOnePdsReply(pno);
 
-       return  new ResponseEntity<>(rdsreply, HttpStatus.OK);
+        return new ResponseEntity<>(rdsreply, HttpStatus.OK);
     }
 
     @PostMapping("/write")
     public ResponseEntity<?> writeok(Pds pds, List<MultipartFile> panames,
                                      @RequestParam("g-recaptcha-response") String gRecaptchaResponse) {
         ResponseEntity<?> response = ResponseEntity.internalServerError().build();
-        log.info("submit된 자료실 정보1 : {}" , pds);
-        log.info("submit된 자료실 정보2 : {}" , panames);
+        log.info("submit된 자료실 정보1 : {}", pds);
+        log.info("submit된 자료실 정보2 : {}", panames);
 
         try {
             if (!googleRecaptchaService.verifyRecaptcha(gRecaptchaResponse)) {
@@ -77,5 +81,22 @@ public class PdsController {
         }
 
         return response;
+    }
+
+    @GetMapping("/down/{fname}")
+    public ResponseEntity<?> down(@PathVariable String fname) {
+        // 다운로드할 실제 파일 경로를 알아냄
+        File file = new File(savePdsDir + fname);
+        if (!file.exists()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("파일이 존재 하지 않습니다!");
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        // 다운로드시 저장할 파일명 지정
+        headers.setContentDisposition(ContentDisposition.attachment().filename(fname).build());
+        // 다운로드시 다운로드할 파일의 유형 지정 - 다운로드 대화상자가 무조껀 뜨도록 OCTET_STREAM으로 설정
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+
+        return new ResponseEntity<>(new FileSystemResource(file), headers, HttpStatus.OK);
     }
 }
