@@ -1,4 +1,4 @@
-package project.abc123.semiprojectv2.service;
+package project.abc123.semiprojectv2.utils;
 
 
 import lombok.extern.slf4j.Slf4j;

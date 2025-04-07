@@ -10,6 +10,7 @@ import project.abc123.semiprojectv2.domain.Gallery;
 import project.abc123.semiprojectv2.domain.GalleryImage;
 import project.abc123.semiprojectv2.repository.GalleryImageRepository;
 import project.abc123.semiprojectv2.repository.GalleryRepository;
+import project.abc123.semiprojectv2.utils.GalleryUploadService;
 
 import java.util.List;
 

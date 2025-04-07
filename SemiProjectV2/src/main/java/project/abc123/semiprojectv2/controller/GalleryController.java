@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.abc123.semiprojectv2.domain.Gallery;
 import project.abc123.semiprojectv2.service.GalleryService;
-import project.abc123.semiprojectv2.service.GoogleRecaptchaService;
+import project.abc123.semiprojectv2.utils.GoogleRecaptchaService;
 
 import java.util.List;
 

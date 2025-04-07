@@ -2,22 +2,16 @@ package project.abc123.semiprojectv2.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-import project.abc123.semiprojectv2.domain.Board;
-import project.abc123.semiprojectv2.domain.Member;
-import project.abc123.semiprojectv2.domain.MemberDTO;
 import project.abc123.semiprojectv2.domain.User;
 import project.abc123.semiprojectv2.jwt.JwtTokenProvider;
-import project.abc123.semiprojectv2.service.GoogleRecaptchaService;
-import project.abc123.semiprojectv2.service.MemberService;
+import project.abc123.semiprojectv2.utils.GoogleRecaptchaService;
 import project.abc123.semiprojectv2.service.UserService;
 
-import java.util.HashMap;
 import java.util.Map;
 
 // 교차출처 리소스 공유 CORS

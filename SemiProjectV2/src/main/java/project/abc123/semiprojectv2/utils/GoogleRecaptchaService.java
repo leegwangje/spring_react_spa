@@ -1,4 +1,4 @@
-package project.abc123.semiprojectv2.service;
+package project.abc123.semiprojectv2.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
