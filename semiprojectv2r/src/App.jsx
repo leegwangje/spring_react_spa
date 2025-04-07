@@ -15,8 +15,10 @@ import GalleryList from "./pages/GalleryList";
 import NotFound from "./pages/NotFound";
 import './styles/App.css'
 import BoardWrite from "./pages/BoardWrite";
+
 import GalleryWrite from "./pages/GalleryWrite";
 import BoardView from "./pages/BoardView.jsx";
+import PdsWrite from "./pages/PdsWrite.jsx";
 
 function App() {
 
@@ -34,6 +36,7 @@ function App() {
         <Route path="/board/find/:ftype/:fkey/:cpg" element={<BoardList/>}/>
         <Route path="/board/write" element={<BoardWrite/>}/>
         <Route path="/gallery/write" element={<GalleryWrite/>}/>
+        <Route path="/pds/write" element={<PdsWrite/>}/>
         <Route path="/board/view/:bno" element={<BoardView/>}/>
         <Route path="/gallery/list" element={<GalleryList/>}/>
         <Route path="/member/myinfo" element={<Myinfo/>}/>
