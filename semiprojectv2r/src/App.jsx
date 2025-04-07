@@ -19,6 +19,7 @@ import BoardWrite from "./pages/BoardWrite";
 import GalleryWrite from "./pages/GalleryWrite";
 import BoardView from "./pages/BoardView.jsx";
 import PdsWrite from "./pages/PdsWrite.jsx";
+import PdsView from "./pages/PdsView.jsx";
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
         <Route path="/gallery/write" element={<GalleryWrite/>}/>
         <Route path="/pds/write" element={<PdsWrite/>}/>
         <Route path="/board/view/:bno" element={<BoardView/>}/>
+        <Route path="/pds/view/:pno" element={<PdsView/>}/>
         <Route path="/gallery/list" element={<GalleryList/>}/>
         <Route path="/member/myinfo" element={<Myinfo/>}/>
         <Route path="*" element={<NotFound/>}/>
