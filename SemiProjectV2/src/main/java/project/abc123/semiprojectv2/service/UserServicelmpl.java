@@ -12,6 +12,7 @@ import project.abc123.semiprojectv2.domain.Member;
 import project.abc123.semiprojectv2.domain.User;
 import project.abc123.semiprojectv2.repository.UserRepository;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -75,4 +76,19 @@ public class UserServicelmpl implements UserService {
 
         return findUser;
     }
+
+    @Override
+    public boolean verifyEmail(String userid, String email, String code) {
+        Optional<User> user = userRepository.findByUseridAndEmailAndVerifycode(userid, email, code);
+
+        if (user.isPresent()) {
+            user.get().setVerifycode(null);     // 인증코드 최기화
+            user.get().setEnabled("true");      // 로그인 가능하도록 설정
+            userRepository.save(user.get());
+            return true;
+        }
+        return false;
+    }
+
+
 }
