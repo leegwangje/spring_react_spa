@@ -1,21 +1,31 @@
 package project.abc123.semiprojectv2.service;
 
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.utility.RandomString;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.abc123.semiprojectv2.domain.Member;
 import project.abc123.semiprojectv2.domain.User;
 import project.abc123.semiprojectv2.repository.UserRepository;
+
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
 public class UserServicelmpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JavaMailSender mailSender;
 
 
     @Override
     public User newUser(User user) {
+
         // 아이디 중복 체크
         if (userRepository.existsByUserid(user.getUserid())) {
             throw new IllegalStateException("이미 존재하는 아이디입니다!!");
@@ -25,9 +35,32 @@ public class UserServicelmpl implements UserService {
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new IllegalStateException("이미 존재하는 이메일입니다!!");
         }
+
+        try {
+            user.setVerifycode(makeVerifyCode());  // 계정에 인증코드 생성
+            sendVerifyCode(user);       // 메일로 확인용 인증코드 발송
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new IllegalStateException("인증코드 발송에 문제  발생!!");
+        }
+
+        user.setPasswd(passwordEncoder.encode(user.getPasswd()));       // 비밀번호를 암호화시켜 저장
         return userRepository.save(user);
     }
 
+    // 알파벳과 숫자로 구성된 6자리 코드 생성
+    private String makeVerifyCode() {
+        return RandomStringUtils.randomAlphanumeric(6);
+    }
+
+    // 인증코드가 포함된 메일 발송
+    private void sendVerifyCode(User user) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(user.getEmail());
+        message.setSubject("회원가입 이메일 인증 코드 발송");
+        message.setText("인증코드 : "+user.getVerifycode());
+        mailSender.send(message);
+    }
 
 
     @Override
