@@ -2,10 +2,12 @@ package project.abc123.semiprojectv2.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import project.abc123.semiprojectv2.domain.User;
 import project.abc123.semiprojectv2.jwt.JwtTokenProvider;
@@ -76,11 +78,16 @@ public class AuthController {
             );
 
             response = ResponseEntity.ok().body(tokens);
-        } catch (BadCredentialsException e) {
+        } catch (UsernameNotFoundException e) {
 
-            response = ResponseEntity.badRequest().body("아이디나 비밀번호가 일치하지 않습니다!");
+            response = ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("아이디가 존재하지 않습니다!");
             log.info(e.getMessage());
-        } catch (Exception e) {
+        }  catch (BadCredentialsException e) {
+
+            response = ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("아이디나 비밀번호가 일치하지 않습니다!");
+            log.info(e.getMessage());
+        }catch (Exception e) {
+            response = ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("이메일 인증을 하지 않았습니다!!");
             log.info(e.getMessage());
         }
 
